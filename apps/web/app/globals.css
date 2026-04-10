@@ -1,0 +1,537 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --purple: #5C4FF6;
+    --purple-light: #EEF0FF;
+    --purple-mid: #A89FF8;
+    --purple-dark: #3B2FC9;
+    --teal: #0FA98E;
+    --teal-light: #E0F7F3;
+    --amber: #F59E0B;
+    --amber-light: #FEF3C7;
+    --red: #EF4444;
+    --red-light: #FEE2E2;
+    --green: #10B981;
+    --green-light: #D1FAE5;
+    --bg: #F8F7FF;
+    --surface: #FFFFFF;
+    --surface2: #F3F2FB;
+    --border: #E8E6F8;
+    --text: #1A1830;
+    --text2: #5C5A7A;
+    --text3: #9896B8;
+    --sidebar-w: 220px;
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Syne', sans-serif;
+  }
+}
+
+@layer components {
+  /* ── BUTTONS ── */
+  .btn {
+    @apply inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg font-display font-semibold text-sm cursor-pointer border-none transition-all duration-200 no-underline;
+  }
+  .btn-primary {
+    background: var(--purple);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--purple-dark);
+    transform: translateY(-1px);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--purple);
+    border: 1.5px solid var(--purple);
+  }
+  .btn-outline:hover {
+    background: var(--purple-light);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text2);
+    border: 1.5px solid var(--border);
+  }
+  .btn-ghost:hover {
+    background: var(--surface2);
+  }
+  .btn-sm {
+    @apply px-3.5 py-1.5 text-xs;
+  }
+  .btn-lg {
+    @apply px-8 py-3.5 text-base;
+  }
+
+  /* ── TAGS ── */
+  .tag {
+    @apply inline-block px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .tag-purple { background: var(--purple-light); color: var(--purple-dark); }
+  .tag-teal   { background: var(--teal-light); color: #065F52; }
+  .tag-amber  { background: var(--amber-light); color: #92400E; }
+  .tag-red    { background: var(--red-light); color: #991B1B; }
+  .tag-green  { background: var(--green-light); color: #065F46; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  /* ── FORM INPUTS ── */
+  .form-input {
+    @apply w-full px-3.5 py-2.5 text-sm outline-none transition-all duration-150;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .form-input:focus {
+    border-color: var(--purple);
+    background: var(--surface);
+  }
+
+  /* ── SCORE RING ── */
+  .score-ring {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: conic-gradient(var(--purple) 0% 68%, var(--border) 68% 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .score-ring-inner {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  /* ── GAP BAR ── */
+  .gap-track {
+    height: 7px;
+    background: var(--surface2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .gap-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+  }
+
+  /* ── TOGGLE ── */
+  .toggle {
+    width: 40px;
+    height: 22px;
+    border-radius: 11px;
+    background: var(--border);
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle.on { background: var(--teal); }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.2s;
+  }
+  .toggle.on::after { transform: translateX(18px); }
+
+  /* ── LOCK GATE ── */
+  .lock-gate {
+    position: relative;
+  }
+  .lock-gate-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(248, 247, 255, 0.85);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 2;
+    backdrop-filter: blur(2px);
+  }
+
+  /* ── UPGRADE BANNER ── */
+  .upgrade-banner {
+    background: linear-gradient(135deg, var(--purple-light) 0%, #E8E5FF 100%);
+    border: 1px solid var(--purple-mid);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  /* ── TOPNAV ── */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(248, 247, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 62px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* ── CHAT ── */
+  .msg-bubble-user {
+    background: var(--purple);
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 16px 16px 4px 16px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .msg-bubble-ai {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 16px;
+    border-radius: 16px 16px 16px 4px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  /* ── SUGGESTION CHIP ── */
+  .sug-chip {
+    padding: 6px 13px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    color: var(--text2);
+    background: var(--surface);
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .sug-chip:hover {
+    border-color: var(--purple);
+    color: var(--purple);
+    background: var(--purple-light);
+  }
+
+  /* ── PAIN CHIP ── */
+  .pain-chip {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.75);
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 14px;
+  }
+
+  /* ── UPLOAD ZONE ── */
+  .upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .upload-zone:hover {
+    border-color: var(--purple);
+    background: var(--purple-light);
+  }
+
+  /* ── METRIC CARD ── */
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 24, 48, 0.6);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .modal-box {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 36px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+  }
+
+  /* ── FEATURE CARD ── */
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(92, 79, 246, 0.1);
+  }
+
+  /* ── TESTIMONIAL CARD ── */
+  .tcard {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  /* ── PRICING CARD ── */
+  .pcard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    position: relative;
+  }
+  .pcard.featured {
+    border: 2px solid var(--purple);
+  }
+
+  /* ── BLOG CARD ── */
+  .blog-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .blog-card:hover {
+    transform: translateY(-3px);
+  }
+
+  /* ── AVATAR ── */
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--purple-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--purple-dark);
+    font-family: 'Syne', sans-serif;
+    flex-shrink: 0;
+  }
+  .avatar-lg {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  /* ── ONBOARDING OPTION ITEM ── */
+  .option-item {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 13px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .option-item:hover {
+    border-color: var(--purple-mid);
+    background: var(--purple-light);
+  }
+  .option-item.selected {
+    border-color: var(--purple);
+    background: var(--purple-light);
+    color: var(--purple-dark);
+    font-weight: 500;
+  }
+
+  /* ── MULTI CHIP ── */
+  .multi-chip {
+    padding: 8px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text2);
+  }
+  .multi-chip:hover { border-color: var(--purple-mid); }
+  .multi-chip.selected {
+    border-color: var(--purple);
+    background: var(--purple-light);
+    color: var(--purple-dark);
+    font-weight: 500;
+  }
+
+  /* ── SKILL ROW ── */
+  .skill-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+
+  /* ── ROADMAP TASK ── */
+  .roadmap-task {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.15s;
+  }
+  .roadmap-task:hover { border-color: var(--purple-mid); }
+  .roadmap-task.done { opacity: 0.6; }
+
+  /* ── HEATMAP BAR ── */
+  .hm-bar {
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    transition: width 0.8s ease;
+  }
+
+  /* ── SETTINGS ROW ── */
+  .settings-row {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  .settings-row:last-child { border: none; }
+
+  /* ── PROGRESS BAR SEGMENT ── */
+  .progress-seg {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+  .progress-seg.done { background: var(--purple); }
+
+  /* ── TASK CHECK ── */
+  .task-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .task-check.done {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #fff;
+    font-size: 10px;
+  }
+
+  /* ── RT CHECK ── */
+  .rt-check {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    transition: all 0.15s;
+  }
+  .rt-check.done {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #fff;
+  }
+}
